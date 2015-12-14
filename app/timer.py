@@ -124,9 +124,9 @@ class Timer:
         hour = self.spHour.get_value_as_int()
         minute = self.spMinute.get_value_as_int()
         timer = self.setTimers(hour, minute, True)
-        if timer == False :
-            print "No More Timer..."
-            return
+        # if timer == False :
+            # print "No More Timer..."
+            # return
         self.check.set_label(str(hour)+"時"+str(minute)+"分")
         print "new timer : ", timer
         return
@@ -145,8 +145,9 @@ class Timer:
     # 配列timersに新しくtimerを追加する（排他処理）
     @synchronized(lock)
     def setTimers(self, hour, minute, enable):
-        if (len(self.timers) > 0):
-            return False
+        if (len(self.timers) > 0): # とりあえずタイマーは１個までしか登録できない仕様にしている
+            # return False
+            self.timers = []
 
         timer = {
             "hour" : hour,
