@@ -23,7 +23,7 @@ try:
         if GPIO.input(IN_NO):
             print process.poll()
 
-        except KeyboardInterrupt:
+except KeyboardInterrupt:
             print "detect key interrupt\n"
 
 GPIO.cleanup()
