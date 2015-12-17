@@ -28,3 +28,7 @@ big dream magnum
 
 ###動画再生
 - ```export DISPLAY=:0```を実行した上で、```mplayer -zoom -x 300 -y 200 -geometry 50%:50%```とやれば画面にちょうど収まる。
+
+###デスクトップのアイコンをいじる
+- アイコンサイズ: ```~/.config/libfm/libfm.conf```の[ui]をいじる
+- アイコン文字サイズ: ```~/.config/pcmanfm/LXDE-pi/desktop-items-0.conf```の[*]をいじる
