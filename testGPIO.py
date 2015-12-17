@@ -15,7 +15,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(IN_NO, GPIO.IN)
 GPIO.setup(OUT_NO, GPIO.OUT)
 
-process = subprocess.Popen('ls')
+process = subprocess.Popen('python while.py')
 
 try:
     while True:
