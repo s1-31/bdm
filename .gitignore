@@ -1,2 +1,4 @@
-wav/*
 sample_original.py
+
+*.wav
+*.pyc
