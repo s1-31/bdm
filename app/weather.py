@@ -5,9 +5,11 @@ import urllib2
 import json
 import datetime
 
+import voice
+
 class Weather(object):
     """docstring for Weather"""
-    def __init__(self, api_key, country, location):
+    def __init__(self, api_key='d58dc2d55e55bf67313b4b490cb99647',country='jp',location='Tokyo'):
         super(Weather, self).__init__()
         self.APIKEY = api_key
         self.country = country
@@ -30,8 +32,23 @@ class Weather(object):
         weather['datetime'] = datetime.datetime.fromtimestamp(data['dt'])
         return weather
 
+    def get_string(self):
+        weather = self.get_weather()
+
+        # string = '今日の天気は、' + str(weather['weather']) + 'です。'
+
+        string1 = str(weather['datetime']) + '現在' + 'の' + str(weather['city']) + 'の天気は、' + str(weather['weather']) + 'です。'
+
+        string2 = str(weather['detail']) + 'で、最高気温は' + str(weather['temp_max']) + '度、最低気温は' + str(weather['temp_min']) + '度です。'
+
+        return string1 + string2
+
 if __name__ == '__main__':
-    api_key = 'd58dc2d55e55bf67313b4b490cb99647'
-    country = 'jp'
-    location = 'Tokyo'
-    print Weather(api_key=api_key, country=country, location=location).get_weather()
+    # api_key = 'd58dc2d55e55bf67313b4b490cb99647'
+    # country = 'jp'
+    # location = 'Tokyo'
+
+    print Weather().get_weather()
+    text =  Weather().get_string()
+    print text
+    voice.VoiceText(text=text).speak()
