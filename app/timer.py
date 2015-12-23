@@ -106,9 +106,12 @@ class Timer:
         self.spins.add(self.minute)
         # セットされたタイマーのチェックボックス
         self.timersVbox = gtk.VBox()
-        self.check = gtk.CheckButton('empty')
-        self.check.connect('toggled', self.on_toggle_check_1)
-        self.timersVbox.pack_start(self.check)
+        self.check1 = gtk.CheckButton('empty')
+        self.check2 = gtk.CheckButton('empty')
+        self.check1.connect('toggled', self.on_toggle_check_1)
+        self.check2.connect('toggled', self.on_toggle_check_2)
+        self.timersVbox.pack_start(self.check1)
+        self.timersVbox.pack_start(self.check2)
         # セットされたタイマーのチェックボックスを格納したフレーム
         self.checkFrm = gtk.Frame('Timers')
         self.checkFrm.add(self.timersVbox)
