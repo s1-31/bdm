@@ -29,6 +29,8 @@ class VoiceText(object):
     def playVoice(self,debug=False,filepath=False):
         if not filepath:
             filepath = self.dir + self.filepath
+        if not os.path.exists(filepath):
+            return
 
         options = '-q '
         if debug:
