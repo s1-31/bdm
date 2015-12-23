@@ -256,7 +256,7 @@ class Timer:
                 if timer['enable'] or all:
                     enable_timers.append(timer)
             return enable_timers
-            
+
     # アラーム機能
     def alarm(self):
 
@@ -283,7 +283,10 @@ class Timer:
                             print_time = time.time()
                         pass
                     self.finish_func(now)
-                    self.check.set_active(False) # アラームが鳴ったらチェックボックスをDisnableする
+                    if timer['check_box'] == 1:
+                        self.check1.set_active(False) # アラームが鳴ったらチェックボックスをDisnableする
+                    else:
+                        self.check2.set_active(False) # アラームが鳴ったらチェックボックスをDisnableする
                     timer['enable'] = False # アラームが鳴ったらそのタイマーはDisnableする
             time.sleep(1) # 現在時刻を取得する周期
         return
