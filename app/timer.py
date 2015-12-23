@@ -1,5 +1,10 @@
 # -*- coding:UTF-8 -*-
 
+# Dependencies
+#   please install curl, for example
+#   (Ubuntu)
+#   $ sudo apt-get insatll python-pygame
+
 # PyGTKモジュールのインポート
 import pygtk
 pygtk.require('2.0')
@@ -9,9 +14,12 @@ import datetime
 import locale
 import threading
 import time
+import os
 
 import voice
 import weather
+
+import pygame
 
 # 排他処理用のデコレータ
 lock = threading.Lock()
@@ -174,6 +182,9 @@ class Timer:
     # アラーム機能
     def alarm(self):
 
+        pygame.mixer.init()
+        pygame.mixer.music.load('../wav/nyan-cat.mp3')
+
         while self.alarm_enable:
             # 現在時刻取得
             now = datetime.datetime.now()
@@ -195,6 +206,9 @@ class Timer:
 
     # アラーム時刻になった時の動作
     def notification(self, now):
+
+        pygame.mixer.music.play(-1) # ()内は再生回数 -1:ループ再生
+
         print "#########################"
         print "######### ALARM #########"
         print "#########################"
@@ -205,10 +219,13 @@ class Timer:
         voice.VoiceText().getVoice(text=text)
 
     def finish_func(self, now):
+        pygame.mixer.music.pause() # 音楽の一時停止
+        pygame.mixer.music.stop() # 再生の終了
+
         print "play voice..."
 
         voice.VoiceText().playVoice()
-        
+
         print "finish..."
 
 if __name__=='__main__':
