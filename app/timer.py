@@ -84,12 +84,9 @@ class Timer:
         self.spins.add(self.spMinute)
         # セットされたタイマーのチェックボックス
         self.timersVbox = gtk.VBox()
-        self.check1 = gtk.CheckButton('empty')
-        self.check2 = gtk.CheckButton('empty')
-        self.check1.connect('toggled', self.on_toggle_check_1)
-        self.check2.connect('toggled', self.on_toggle_check_2)
-        self.timersVbox.pack_start(self.check1)
-        self.timersVbox.pack_start(self.check2)
+        self.check = gtk.CheckButton('empty')
+        self.check.connect('toggled', self.on_toggle_check_1)
+        self.timersVbox.pack_start(self.check)
         # セットされたタイマーのチェックボックスを格納したフレーム
         self.checkFrm = gtk.Frame('Timers')
         self.checkFrm.add(self.timersVbox)
@@ -134,12 +131,6 @@ class Timer:
         gtk.main_quit()
         return False
 
-    # 現在時刻取得ボタンが押された時に呼ばれるボタン
-    # def set_nowTime_txt(self, widget, data=None):
-        # ラベルに文字列を設定
-        # d = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-        # self.label_show.set_markup("<big><b>" + d + "</b></big>")
-
     # タイマーセットボタンが押された時に呼ばれる関数
     def timerSet_clicked(self, widget, data=None):
         hour = self.spHour.get_value_as_int()
@@ -162,18 +153,6 @@ class Timer:
             print 'check 1 is OFF'
             self.timers[0]['enable'] = False
             print self.timers[0]
-
-    # 2つ目のチェックボックスがオン・オフされた時に呼ばれる関数
-    def on_toggle_check_2(self, widget=None, data=None):
-        if widget.get_active():
-            print 'check 2 is ON'
-            self.timers[0]['enable'] = True
-            print self.timers[0]
-        else:
-            print 'check 2 is OFF'
-            self.timers[0]['enable'] = False
-            print self.timers[0]
-
 
     # 配列timersに新しくtimerを追加する（排他処理）
     @synchronized(lock)
@@ -257,7 +236,7 @@ class Timer:
         print 'get weather'
         text = weather.Weather().get_string()
         print 'get voice'
-        voice.VoiceText().getVoice(text=text)
+        voice.VoiceText().getVoice(text=text,speaker='haruka',emotion='happiness',level=4)
 
     # アラームが止められた後の処理
     def finish_func(self, now):

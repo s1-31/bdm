@@ -75,4 +75,6 @@ if __name__ == '__main__':
     # emotion = 'sadness' # happiness, anger, sadness, 話者はharuka、hikari、takeru、santa、bearのみ
     # level = 4 # 1 ~ 4
 
-    VoiceText().speak()
+    VoiceText(speaker='haruka',emotion='happiness',level=4,text='今日はクリスマスだよ！やったね！').speak()
+    VoiceText(speaker='bear',emotion='anger',level=4,text='今日はクリスマスだよ！リア充なんて死んでまえ！').speak()
+    VoiceText(speaker='santa',emotion='sadness',level=4,text='今日はクリスマスだよ！あれ？予定が見当たらないよ？').speak()
