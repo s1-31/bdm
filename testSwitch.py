@@ -5,9 +5,10 @@ import RPi.GPIO as GPIO
 import time
 import subprocess
 
-IN_NO = 20 #電気ショックボタンが押されたか検出用
-OUT_NO = 21 #モーター回転用電源
-OUT_NO2 = 26 #スイッチ導通検出用電源
+IN_NO = 12
+IN_NO2 = 13
+IN_NO3 = 19
+OUT_NO = 16 
 
 
 print "press ^C to exit program ...\n"
@@ -16,14 +17,16 @@ GPIO.setmode(GPIO.BCM)
 #GPIO.setmode(GPIO.BOARD)
 
 GPIO.setup(IN_NO, GPIO.IN)
-#GPIO.setup(OUT_NO, GPIO.OUT)
-GPIO.setup(OUT_NO2, GPIO.OUT)
+GPIO.setup(IN_NO2, GPIO.IN)
+GPIO.setup(IN_NO3, GPIO.IN)
+GPIO.setup(OUT_NO, GPIO.OUT)
 
 try:
     while True:
-        #GPIO.output(OUT_NO, True)
-	GPIO.output(OUT_NO2, True)
-	print GPIO.input(IN_NO)
+        GPIO.output(OUT_NO, True)
+	print "{0}:{1}".format(IN_NO, GPIO.input(IN_NO))
+        print "{0}:{1}".format(IN_NO2, GPIO.input(IN_NO2))
+	print "{0}:{1}".format(IN_NO3, GPIO.input(IN_NO3))
 except KeyboardInterrupt:
             print "detect key interrupt\n"
 
