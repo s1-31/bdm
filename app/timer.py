@@ -61,9 +61,9 @@ class Timer:
         self.button_quit.set_label('Quit')
         self.button_quit.connect('clicked', self.end_application)
         # 現在時刻取得ボタン
-        self.button_now = gtk.Button()
-        self.button_now.set_label('What time is it now ?')
-        self.button_now.connect('clicked', self.set_nowTime_txt)
+        # self.button_now = gtk.Button()
+        # self.button_now.set_label('What time is it now ?')
+        # self.button_now.connect('clicked', self.set_nowTime_txt)
         # テキストボックス作成
         # self.entry = gtk.Entry()
         #set timerボタン
@@ -74,6 +74,7 @@ class Timer:
         self.adjHour = gtk.Adjustment(value=8, lower=0, upper=23, step_incr=1, page_incr=1)
         self.spHour = gtk.SpinButton(adjustment=self.adjHour, digits=1)
         self.spHour.set_wrap(True)
+        # self.spHour.set_size_request(-1,-1)
         # 分
         self.adjMinute = gtk.Adjustment(value=0, lower=0, upper=59, step_incr=1, page_incr=10)
         self.spMinute = gtk.SpinButton(adjustment=self.adjMinute, digits=1)
@@ -93,14 +94,14 @@ class Timer:
         self.vbox = gtk.VBox()
         self.vbox.add(self.label_show)
         self.vbox.add(self.spins)
-        # self.vbox.add(self.entry)
-        self.vbox.add(self.button_now)
+        # self.vbox.add (self.button_now)
         self.vbox.add(self.button_timerSet)
         self.vbox.add(self.button_quit)
         # チェックフレームとVBoxをHBoxに格納
         self.hbox = gtk.HBox()
         self.hbox.pack_start(self.vbox)
         self.hbox.pack_start(self.checkFrm)
+
         # HBoxをウィンドウに格納
         self.window.add(self.hbox)
         # ウィンドウ、および配下の全ウィジェットを表示
@@ -131,10 +132,10 @@ class Timer:
         return False
 
     # 現在時刻取得ボタンが押された時に呼ばれるボタン
-    def set_nowTime_txt(self, widget, data=None):
+    # def set_nowTime_txt(self, widget, data=None):
         # ラベルに文字列を設定
-        d = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-        self.label_show.set_markup("<big><b>" + d + "</b></big>")
+        # d = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+        # self.label_show.set_markup("<big><b>" + d + "</b></big>")
 
     # タイマーセットボタンが押された時に呼ばれる関数
     def timerSet_clicked(self, widget, data=None):
@@ -195,6 +196,8 @@ class Timer:
             # 現在時刻取得
             now = datetime.datetime.now()
             print "now : ", now.hour, now.minute, now.second
+            d = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+            self.label_show.set_markup("<big><b>" + d + "</b></big>")
 
             # タイマーと現在時刻が一致するものがないか
             timers = self.getTimers(False)
