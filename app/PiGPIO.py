@@ -35,7 +35,7 @@ class PiGPIO():
         GPIO.output(self.conduction_power_no, True)
 
     def conduction_power_off(self):
-        GPIO.output(self.conduction_power_no, True)
+        GPIO.output(self.conduction_power_no, False)
 
     def cleanup(self):
         GPIO.cleanup()
@@ -44,8 +44,9 @@ class PiGPIO():
 if __name__ == '__main__':
     gpio = PiGPIO()
 
+    
+
     while True:
-	gpio.conduction_power_on()
         print gpio.check_conduction()
         
     gpio.conduction_power_off()
