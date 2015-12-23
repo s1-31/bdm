@@ -22,20 +22,31 @@ class PiGPIO():
         GPIO.output(self.conduction_power_no, False)
 
 
-    def check_conduction():
-        return GPIO.input(self.motor_power_no)
+    def check_conduction(self):
+        return GPIO.input(self.conduction_check_no)
 
-    def motor_power_on():
+    def motor_power_on(self):
         GPIO.output(self.motor_power_no, True)
 
-    def motor_power_off():
+    def motor_power_off(self):
         GPIO.output(self.motor_power_no, False)
 
-    def conduction_power_on():
+    def conduction_power_on(self):
         GPIO.output(self.conduction_power_no, True)
 
-    def conduction_power_off():
+    def conduction_power_off(self):
         GPIO.output(self.conduction_power_no, True)
 
-    def cleanup():
+    def cleanup(self):
         GPIO.cleanup()
+
+
+if __name__ == '__main__':
+    gpio = PiGPIO()
+
+    while True:
+	gpio.conduction_power_on()
+        print gpio.check_conduction()
+        
+    gpio.conduction_power_off()
+    gpio.cleanup()
