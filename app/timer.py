@@ -19,6 +19,7 @@ import os
 import voice
 import weather
 import PiGPIO
+import mycalendar
 
 import pygame
 
@@ -254,9 +255,14 @@ class Timer:
         print 'motor off'
 
         print 'get weather'
-        text = weather.Weather().get_string()
+        text1 = weather.Weather().get_string()
+        print 'get calendor'
+        text2 = mycalendar.Calendar().get_eventString()
         print 'get voice'
-        voice.VoiceText().getVoice(text=text,speaker='haruka',emotion='happiness',level=4)
+        v = voice.VoiceText(speaker='haruka',emotion='happiness',level=4)
+        v.getVoice(text=text1,filepath='../wav/weather.wav')
+        v.getVoice(text=text2,filepath='../wav/calendor.wav')
+
 
     # アラームが止められた後の処理
     def finish_func(self, now):
@@ -269,7 +275,8 @@ class Timer:
 
         print "play voice..."
 
-        voice.VoiceText().playVoice()
+        voice.VoiceText().playVoice(filepath='../wav/weather.wav')
+        voice.VoiceText().playVoice(filepath='../wav/calendor.wav')
 
         self.gpio.conduction_power_off()
 
