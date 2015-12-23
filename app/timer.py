@@ -204,11 +204,9 @@ class Timer:
                     print 'wait...'
                     print_time = time.time() # 導通待ちの間のprint間隔を保持するための時間
                     while not self.gpio.check_conduction():
-                    # while True:
                         if time.time() - print_time > 3: # 3秒に１回printする
                             print 'wait...'
                             print_time = time.time()
-                            break
                         pass
                     self.finish_func(now)
                     self.check.set_active(False) # アラームが鳴ったらチェックボックスをDisnableする
