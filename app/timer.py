@@ -120,7 +120,7 @@ class Timer:
         self.alarm_thread.start()
         gtk.gdk.threads_leave()
 
-        self.gpio = PiGPIO.PiGPIO()
+        # self.gpio = PiGPIO.PiGPIO()
 
 
     # アプリが終了するときに呼ばれる関数
@@ -203,10 +203,12 @@ class Timer:
                     self.notification(now) # アラーム時刻になった時の動作
                     print 'wait...'
                     print_time = time.time() # 導通待ちの間のprint間隔を保持するための時間
-                    while not self.gpio.check_conduction():
+                    # while not self.gpio.check_conduction():
+                    while True:
                         if time.time() - print_time > 3: # 3秒に１回printする
                             print 'wait...'
                             print_time = time.time()
+                            break
                         pass
                     self.finish_func(now)
                     self.check.set_active(False) # アラームが鳴ったらチェックボックスをDisnableする
@@ -217,7 +219,7 @@ class Timer:
     # アラーム時刻になった時の動作
     def notification(self, now):
 
-    	self.gpio.conduction_power_on()
+    	# self.gpio.conduction_power_on()
 
         pygame.mixer.music.play(-1) # ()内は再生回数 -1:ループ再生
 
@@ -228,9 +230,9 @@ class Timer:
         print "#########################"
 
         print 'motor on'
-        self.gpio.motor_power_on()
-        time.sleep(5)
-        self.gpio.motor_power_off()
+        # self.gpio.motor_power_on()
+        # time.sleep(5)
+        # self.gpio.motor_power_off()
         print 'motor off'
 
         print 'get weather'
@@ -249,8 +251,8 @@ class Timer:
 
         voice.VoiceText().playVoice()
 
-        self.gpio.conduction_power_off()
-        self.gpio.cleanup()
+        # self.gpio.conduction_power_off()
+        # self.gpio.cleanup()
 
         print "finish..."
 
