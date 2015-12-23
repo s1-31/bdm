@@ -314,12 +314,9 @@ class Timer:
 
         print 'get weather'
         text1 = weather.Weather().get_string()
-        # print 'get calendor'
-        # text2 = mycalendar.Calendar().get_eventString()
         print 'get voice'
         v = voice.VoiceText(speaker='haruka',emotion='happiness',level=4)
         v.getVoice(text=text1,filepath='../wav/weather.wav')
-        # v.getVoice(text=text2,filepath='../wav/calendor.wav')
 
 
     # アラームが止められた後の処理
@@ -334,7 +331,6 @@ class Timer:
         print "play voice..."
 
         voice.VoiceText().playVoice(filepath='../wav/weather.wav')
-        # voice.VoiceText().playVoice(filepath='../wav/calendor.wav')
 
         self.gpio.conduction_power_off()
 
