@@ -54,7 +54,6 @@ class Timer:
         self.window.set_title('目覚マシマシ')
         self.window.connect('destroy_event', self.end_application)
         self.window.connect('delete_event', self.end_application)
-        self.window.fullscreen()
         # ラベルを作成
         self.label_show = gtk.Label()
         self.label_str = '<big><b>Hi!</b></big>'
@@ -72,17 +71,41 @@ class Timer:
         self.button_timerSet.connect('clicked', self.timerSet_clicked)
         # スピンボタン
         # 時間(Hour)
-        self.adjHour = gtk.Adjustment(value=8, lower=0, upper=23, step_incr=1, page_incr=1)
-        self.spHour = gtk.SpinButton(adjustment=self.adjHour, digits=1)
-        self.spHour.set_wrap(True)
-        # self.spHour.set_size_request(-1,-1)
+        self.entry_hour = gtk.Entry()
+        self.entry_hour.set_text('0')
+        self.entry_hour.set_size_request(40,40)
+        self.hour_button_up = gtk.Button("△")
+        self.hour_button_up.set_size_request(50,40)
+        self.hour_button_up.connect('clicked', self.hour_up)
+        self.hour_button_down = gtk.Button('▽')
+        self.hour_button_down.set_size_request(50,40)
+        self.hour_button_down.connect('clicked', self.hour_down)
+        self.hour_buttons = gtk.VBox()
+        self.hour_buttons.add(self.hour_button_up)
+        self.hour_buttons.add(self.hour_button_down)
+        self.hour = gtk.HBox()
+        self.hour.add(self.entry_hour)
+        self.hour.add(self.hour_buttons)
         # 分
-        self.adjMinute = gtk.Adjustment(value=0, lower=0, upper=59, step_incr=1, page_incr=10)
-        self.spMinute = gtk.SpinButton(adjustment=self.adjMinute, digits=1)
-        self.spMinute.set_wrap(True)
+        self.entry_minute = gtk.Entry()
+        self.entry_minute.set_text('0')
+        self.entry_minute.set_size_request(40,40)
+        self.minute_button_up = gtk.Button('△')
+        self.minute_button_up.set_size_request(50,40)
+        self.minute_button_up.connect('clicked', self.minute_up)
+        self.minute_button_down = gtk.Button('▽')
+        self.minute_button_down.set_size_request(50,40)
+        self.minute_button_down.connect('clicked', self.minute_down)
+        self.minute_buttons = gtk.VBox()
+        self.minute_buttons.add(self.minute_button_up)
+        self.minute_buttons.add(self.minute_button_down)
+        self.minute = gtk.HBox()
+        self.minute.add(self.entry_minute)
+        self.minute.add(self.minute_buttons)
+
         self.spins = gtk.HBox()
-        self.spins.add(self.spHour)
-        self.spins.add(self.spMinute)
+        self.spins.add(self.hour)
+        self.spins.add(self.minute)
         # セットされたタイマーのチェックボックス
         self.timersVbox = gtk.VBox()
         self.check = gtk.CheckButton('empty')
@@ -134,8 +157,8 @@ class Timer:
 
     # タイマーセットボタンが押された時に呼ばれる関数
     def timerSet_clicked(self, widget, data=None):
-        hour = self.spHour.get_value_as_int()
-        minute = self.spMinute.get_value_as_int()
+        hour = int(self.entry_hour.get_text())
+        minute = int(self.entry_minute.get_text())
         timer = self.setTimers(hour, minute, True)
         # if timer == False :
             # print "No More Timer..."
@@ -190,7 +213,7 @@ class Timer:
         while self.alarm_enable:
             # 現在時刻取得
             now = datetime.datetime.now()
-            print "now : ", now.hour, now.minute, now.second
+            # print "now : ", now.hour, now.minute, now.second
             d = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
             self.label_show.set_markup("<big><b>" + d + "</b></big>")
 
@@ -257,6 +280,31 @@ class Timer:
         # self.gpio.cleanup()
 
         print "finish..."
+
+    def hour_up(self, widget=None, data=None):
+        print 'hour up'
+        hour = int(self.entry_hour.get_text())
+        hour = (hour+1) % 24
+        self.entry_hour.set_text(str(hour))
+
+    def hour_down(self, widget=None, data=None):
+        print 'hour down'
+        hour = int(self.entry_hour.get_text())
+        hour = (hour-1) % 24
+        self.entry_hour.set_text(str(hour))
+
+    def minute_up(self, widget=None, data=None):
+        print 'minute up'
+        minute = int(self.entry_minute.get_text())
+        minute = (minute+1) % 60
+        self.entry_minute.set_text(str(minute))
+
+    def minute_down(self, widget=None, data=None):
+        print 'minute down'
+        minute = int(self.entry_minute.get_text())
+        minute = (minute-1) % 60
+        self.entry_minute.set_text(str(minute))
+
 
 if __name__=='__main__':
     print "hello" # 目覚ましアプリスタート
