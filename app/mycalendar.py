@@ -57,7 +57,7 @@ class Calendar:
                 credentials = tools.run_flow(flow, store, flags)
             else: # Needed only for compatibility with Python 2.6
                 credentials = tools.run(flow, store)
-            print('Storing credentials to ' + credential_path)
+            # print('Storing credentials to ' + credential_path)
         return credentials
 
 
@@ -74,12 +74,11 @@ class Calendar:
         if not timeMax:
             tstr = str(datetime.datetime.utcnow().isoformat()).split('T')[0] + 'T' + '23:59:59'
             jdatetime = datetime.datetime.strptime(tstr, '%Y-%m-%dT%H:%M:%S')
-            print(jdatetime)
             timeMax = jdatetime - datetime.timedelta(hours=9)
             timeMax = timeMax.isoformat() + 'Z'
         if not eventsMax:
             eventsMax = 10
-        print('Getting the upcoming {0} events'.format(eventsMax))
+        # print('Getting the upcoming {0} events'.format(eventsMax))
         eventsResult = service.events().list(
             calendarId='primary', timeMin=timeMin, timeMax=timeMax, maxResults=10, singleEvents=True,
             orderBy='startTime').execute()
@@ -93,10 +92,9 @@ class Calendar:
             eventString += 'ありません。'
         for event in self.events:
             if event['start'].has_key('dateTime'):
-                print(event['summary'])
                 eventString += str(event['start']['dateTime'])[0:-6].split('T')[1] + 'から' + (str(event['end']['dateTime'])[0:-6].split('T')[0] + 'の' if str(event['end']['dateTime'])[0:-6].split('T')[0] != today else '') + str(event['end']['dateTime'])[0:-6].split('T')[1] + 'まで' + event['summary'].encode('UTF-8') + '、'
             else:
-                print(event['summary'])
+                # print(event['summary'])
                 eventString += '終日、' + event['summary'].encode('UTF-8') + '、'
 
         eventString += 'です。'
