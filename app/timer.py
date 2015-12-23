@@ -173,14 +173,41 @@ class Timer:
 
     # 一つ目のチェックボックスがオン・オフされた時に呼ばれる関数
     def on_toggle_check_1(self, widget=None, data=None):
+        print 'toggle'
+        timers = self.getTimers(all=True)
+        this_timer = None
+        print 'timer in timers'
+        for timer in timers:
+            if timer['check_box'] == 1:
+                this_timer = timer
+        if not this_timer:
+            return
+
         if widget.get_active():
             print 'check 1 is ON'
-            self.timers[0]['enable'] = True
-            print self.timers[0]
+            this_timer['enable'] = True
         else:
             print 'check 1 is OFF'
-            self.timers[0]['enable'] = False
-            print self.timers[0]
+            this_timer['enable'] = False
+
+    # 2つ目のチェックボックスがオン・オフされた時に呼ばれる関数
+    def on_toggle_check_2(self, widget=None, data=None):
+        print 'toggle'
+        timers = self.getTimers(all=True)
+        this_timer = None
+        print 'timer in timers'
+        for timer in timers:
+            if timer['check_box'] == 2:
+                this_timer = timer
+        if not this_timer:
+            return
+
+        if widget.get_active():
+            print 'check 2 is ON'
+            this_timer['enable'] = True
+        else:
+            print 'check 2 is OFF'
+            this_timer['enable'] = False
 
     # 配列timersに新しくtimerを追加する（排他処理）
     @synchronized(lock)
