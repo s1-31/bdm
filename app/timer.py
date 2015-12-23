@@ -173,10 +173,10 @@ class Timer:
 
     # 一つ目のチェックボックスがオン・オフされた時に呼ばれる関数
     def on_toggle_check_1(self, widget=None, data=None):
-        print 'toggle'
+        # print 'toggle'
         timers = self.getTimers(all=True)
         this_timer = None
-        print 'timer in timers'
+        # print 'timer in timers'
         for timer in timers:
             if timer['check_box'] == 1:
                 this_timer = timer
@@ -192,10 +192,10 @@ class Timer:
 
     # 2つ目のチェックボックスがオン・オフされた時に呼ばれる関数
     def on_toggle_check_2(self, widget=None, data=None):
-        print 'toggle'
+        # print 'toggle'
         timers = self.getTimers(all=True)
         this_timer = None
-        print 'timer in timers'
+        # print 'timer in timers'
         for timer in timers:
             if timer['check_box'] == 2:
                 this_timer = timer
