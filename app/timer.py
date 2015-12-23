@@ -230,7 +230,7 @@ class Timer:
         print 'get weather'
         text = weather.Weather().get_string()
         print 'get voice'
-        voice.VoiceText().getVoice(text=text)
+        voice.VoiceText().getVoice(text=text,speaker='haruka',emotion='happiness',level=4)
 
     # アラームが止められた後の処理
     def finish_func(self, now):
