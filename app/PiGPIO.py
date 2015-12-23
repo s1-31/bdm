@@ -43,10 +43,10 @@ class PiGPIO():
 
 if __name__ == '__main__':
     gpio = PiGPIO()
+    gpio.conduction_power_on()
 
     while True:
-	gpio.conduction_power_on()
         print gpio.check_conduction()
-        
+
     gpio.conduction_power_off()
     gpio.cleanup()
