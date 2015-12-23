@@ -331,6 +331,7 @@ class Timer:
         print "play voice..."
 
         voice.VoiceText().playVoice(filepath='../wav/weather.wav')
+        voice.VoiceText().playVoice(filepath='../wav/calendor.wav')
 
         self.gpio.conduction_power_off()
 
