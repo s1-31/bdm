@@ -72,9 +72,11 @@ class Timer:
         # 時間(Hour)
         self.adjHour = gtk.Adjustment(value=8, lower=0, upper=23, step_incr=1, page_incr=1)
         self.spHour = gtk.SpinButton(adjustment=self.adjHour, digits=1)
+        self.spHour.set_wrap(True)
         # 分
         self.adjMinute = gtk.Adjustment(value=0, lower=0, upper=59, step_incr=1, page_incr=10)
         self.spMinute = gtk.SpinButton(adjustment=self.adjMinute, digits=1)
+        self.spMinute.set_wrap(True)
         self.spins = gtk.HBox()
         self.spins.add(self.spHour)
         self.spins.add(self.spMinute)

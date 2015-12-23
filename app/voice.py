@@ -3,7 +3,7 @@
 # Dependencies
 #   please install curl, for example
 #   (Ubuntu)
-#   $ sudo apt-get insatll curl
+#   $ sudo apt-get insatll curl sox
 
 import subprocess
 import os
