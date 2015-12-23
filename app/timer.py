@@ -51,9 +51,10 @@ class Timer:
         self.window = gtk.Window()
         self.window.set_border_width(5)
         self.window.set_size_request(300, 200)
-        self.window.set_title('BDM')
+        self.window.set_title('目覚マシマシ')
         self.window.connect('destroy_event', self.end_application)
         self.window.connect('delete_event', self.end_application)
+        self.window.fullscreen()
         # ラベルを作成
         self.label_show = gtk.Label()
         self.label_str = '<big><b>Hi!</b></big>'
@@ -209,7 +210,7 @@ class Timer:
         while self.alarm_enable:
             # 現在時刻取得
             now = datetime.datetime.now()
-            print "now : ", now.hour, now.minute, now.second
+            # print "now : ", now.hour, now.minute, now.second
             d = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
             self.label_show.set_markup("<big><b>" + d + "</b></big>")
 
