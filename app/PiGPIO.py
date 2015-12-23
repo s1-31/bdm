@@ -10,7 +10,7 @@ import subprocess
 # OUT_NO2 = 26 #スイッチ導通検出用電源
 
 class PiGPIO():
-    def __init__(self, conduction_check_no=20, conduction_power_no=26, motor_power_no=21):
+    def __init__(self, conduction_check_no=16, conduction_power_no=26, motor_power_no=21):
         self.conduction_check_no=conduction_check_no
         self.conduction_power_no=conduction_power_no
         self.motor_power_no=motor_power_no
@@ -44,10 +44,10 @@ class PiGPIO():
 if __name__ == '__main__':
     gpio = PiGPIO()
 
-    
+
 
     while True:
         print gpio.check_conduction()
-        
+
     gpio.conduction_power_off()
     gpio.cleanup()
