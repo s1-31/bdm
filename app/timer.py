@@ -164,7 +164,10 @@ class Timer:
         # if timer == False :
             # print "No More Timer..."
             # return
-        self.check.set_label(str(hour)+"時"+str(minute)+"分")
+        if timer['check_box'] == 1:
+            self.check1.set_label(str(hour)+"時"+str(minute)+"分")
+        else:
+            self.check2.set_label(str(hour)+"時"+str(minute)+"分")
         print "new timer : ", timer
         return
 
