@@ -120,7 +120,7 @@ class Timer:
         self.alarm_thread.start()
         gtk.gdk.threads_leave()
 
-        self.gpio = PiGPIO()
+        self.gpio = PiGPIO.PiGPIO()
 
 
     # アプリが終了するときに呼ばれる関数
