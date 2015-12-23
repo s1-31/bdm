@@ -128,6 +128,8 @@ class Timer:
         self.alarm_enable = False
         self.alarm_thread.join()
         gtk.main_quit()
+        self.gpio.cleanup()
+
         return False
 
     # 現在時刻取得ボタンが押された時に呼ばれるボタン
@@ -250,7 +252,6 @@ class Timer:
         voice.VoiceText().playVoice()
 
         self.gpio.conduction_power_off()
-        self.gpio.cleanup()
 
         print "finish..."
 
