@@ -108,9 +108,12 @@ class Timer:
         self.spins.add(self.minute)
         # セットされたタイマーのチェックボックス
         self.timersVbox = gtk.VBox()
-        self.check = gtk.CheckButton('empty')
-        self.check.connect('toggled', self.on_toggle_check_1)
-        self.timersVbox.pack_start(self.check)
+        self.check1 = gtk.CheckButton('empty')
+        self.check2 = gtk.CheckButton('empty')
+        self.check1.connect('toggled', self.on_toggle_check_1)
+        self.check2.connect('toggled', self.on_toggle_check_2)
+        self.timersVbox.pack_start(self.check1)
+        self.timersVbox.pack_start(self.check2)
         # セットされたタイマーのチェックボックスを格納したフレーム
         self.checkFrm = gtk.Frame('Timers')
         self.checkFrm.add(self.timersVbox)
@@ -162,44 +165,97 @@ class Timer:
         # if timer == False :
             # print "No More Timer..."
             # return
-        self.check.set_label(str(hour)+"時"+str(minute)+"分")
+        if timer['check_box'] == 1:
+            self.check1.set_label(str(hour)+"時"+str(minute)+"分")
+        else:
+            self.check2.set_label(str(hour)+"時"+str(minute)+"分")
+
         print "new timer : ", timer
         return
 
     # 一つ目のチェックボックスがオン・オフされた時に呼ばれる関数
     def on_toggle_check_1(self, widget=None, data=None):
+        print 'toggle'
+        timers = self.getTimers(all=True)
+        this_timer = None
+        print 'timer in timers'
+        for timer in timers:
+            if timer['check_box'] == 1:
+                this_timer = timer
+        if not this_timer:
+            return
+
         if widget.get_active():
             print 'check 1 is ON'
-            self.timers[0]['enable'] = True
-            print self.timers[0]
+            this_timer['enable'] = True
         else:
             print 'check 1 is OFF'
-            self.timers[0]['enable'] = False
-            print self.timers[0]
+            this_timer['enable'] = False
+
+    # 2つ目のチェックボックスがオン・オフされた時に呼ばれる関数
+    def on_toggle_check_2(self, widget=None, data=None):
+        print 'toggle'
+        timers = self.getTimers(all=True)
+        this_timer = None
+        print 'timer in timers'
+        for timer in timers:
+            if timer['check_box'] == 2:
+                this_timer = timer
+        if not this_timer:
+            return
+
+        if widget.get_active():
+            print 'check 2 is ON'
+            this_timer['enable'] = True
+        else:
+            print 'check 2 is OFF'
+            this_timer['enable'] = False
 
     # 配列timersに新しくtimerを追加する（排他処理）
-    @synchronized(lock)
+    # @synchronized(lock)
     def setTimers(self, hour, minute, enable):
-        if (len(self.timers) > 0): # とりあえずタイマーは１個までしか登録できない仕様にしている
-            # return False
-            self.timers = []
+        change_timer = None
+        num1_timer = None
+        for timer in self.timers:
+            if timer['enable'] == False:
+                change_timer = timer
+            if timer['check_box'] == 1:
+                num1_timer = timer
+                if num1_timer == change_timer:
+                    break
+
+        if change_timer == None and len(self.timers) == 2:
+            self.timers.remove(num1_timer)
+            num = 1
+        elif len(self.timers) == 2:
+            num = change_timer['check_box']
+            self.timers.remove(change_timer)
+        else: # とりあえずタイマーは１個までしか登録できない仕様にしている
+            if num1_timer == None:
+                num = 1
+            else:
+                num = 2
 
         timer = {
             "hour" : hour,
             "minute" : minute,
             "enable" : enable,
-            "check_box" : len(self.timers)
+            "check_box" : num
         }
         self.timers.append(timer)
-        self.check.set_active(True)
+        if num == 1:
+            self.check1.set_active(True)
+        if num == 2:
+            self.check2.set_active(True)
+
         return timer
 
     # 配列timersから各timerを取得する（排他処理）
-    @synchronized(lock)
-    def getTimers(self, all):
+    # @synchronized(lock)
+    def getTimers(self, all=False):
         enable_timers = []
         for timer in self.timers:
-            if( timer['enable'] or all):
+            if timer['enable'] or all:
                 enable_timers.append(timer)
         return enable_timers
 
@@ -232,7 +288,11 @@ class Timer:
                         break
                         pass
                     self.finish_func(now)
-                    self.check.set_active(False) # アラームが鳴ったらチェックボックスをDisnableする
+                    if timer['check_box'] == 1:
+                        self.check1.set_active(False) # アラームが鳴ったらチェックボックスをDisnableする
+                    else:
+                        self.check2.set_active(False) # アラームが鳴ったらチェックボックスをDisnableする
+
                     timer['enable'] = False # アラームが鳴ったらそのタイマーはDisnableする
             time.sleep(1) # 現在時刻を取得する周期
         return
