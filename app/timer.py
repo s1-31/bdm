@@ -117,7 +117,6 @@ class Timer:
 
         self.gpio = PiGPIO.PiGPIO()
 
-
     # アプリが終了するときに呼ばれる関数
     def end_application(self, widget, data=None):
         self.alarm_enable = False
@@ -220,6 +219,8 @@ class Timer:
         print "#########",now.hour, now.minute,"#########"
         print "#########################"
 
+        time.sleep(2)
+
         print 'motor on'
         self.gpio.motor_power_on()
         time.sleep(5)
@@ -237,6 +238,8 @@ class Timer:
         print 'stop music'
         pygame.mixer.music.pause() # 音楽の一時停止
         pygame.mixer.music.stop() # 再生の終了
+
+        time.sleep(2)
 
         print "play voice..."
 
