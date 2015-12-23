@@ -312,12 +312,25 @@ class Timer:
         self.gpio.motor_power_off()
         print 'motor off'
 
-        print 'get weather'
-        text1 = weather.Weather().get_string()
-        print 'get voice'
-        v = voice.VoiceText(speaker='haruka',emotion='happiness',level=4)
-        v.getVoice(text=text1,filepath='../wav/weather.wav')
+        try:
+            print 'get weather'
+            text1 = weather.Weather().get_string()
+        except:
+            print 'error'
 
+        try:
+            print 'get calendor'
+            text2 = mycalendar.Calendar().get_eventString()
+        except:
+            print 'error'
+
+        try:
+            print 'get voice'
+            v = voice.VoiceText(speaker='haruka',emotion='happiness',level=4)
+            v.getVoice(text=text1,filepath='../wav/weather.wav')
+            v.getVoice(text=text2,filepath='../wav/calendor.wav')
+        except:
+            print 'error'
 
     # アラームが止められた後の処理
     def finish_func(self, now):
