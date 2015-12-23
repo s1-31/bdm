@@ -147,7 +147,6 @@ class Timer:
 
         # self.gpio = PiGPIO()
 
-
     # アプリが終了するときに呼ばれる関数
     def end_application(self, widget, data=None):
         self.alarm_enable = False
