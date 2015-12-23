@@ -248,10 +248,13 @@ class Timer:
     def finish_func(self, now):
 
         print 'stop music'
+        time.sleep(1)
+
         pygame.mixer.music.pause() # 音楽の一時停止
         pygame.mixer.music.stop() # 再生の終了
 
         print "play voice..."
+        time.sleep(1)
 
         voice.VoiceText().playVoice()
 
