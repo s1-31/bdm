@@ -153,8 +153,8 @@ class Timer:
 
     # タイマーセットボタンが押された時に呼ばれる関数
     def timerSet_clicked(self, widget, data=None):
-        hour = self.spHour.get_value_as_int()
-        minute = self.spMinute.get_value_as_int()
+        hour = int(self.entry_hour.get_text())
+        minute = int(self.entry_minute.get_text())
         timer = self.setTimers(hour, minute, True)
         # if timer == False :
             # print "No More Timer..."
