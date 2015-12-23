@@ -84,9 +84,12 @@ class Timer:
         self.spins.add(self.spMinute)
         # セットされたタイマーのチェックボックス
         self.timersVbox = gtk.VBox()
-        self.check = gtk.CheckButton('empty')
-        self.check.connect('toggled', self.on_toggle_check_1)
-        self.timersVbox.pack_start(self.check)
+        self.check1 = gtk.CheckButton('empty')
+        self.check2 = gtk.CheckButton('empty')
+        self.check1.connect('toggled', self.on_toggle_check_1)
+        self.check2.connect('toggled', self.on_toggle_check_2)
+        self.timersVbox.pack_start(self.check1)
+        self.timersVbox.pack_start(self.check2)
         # セットされたタイマーのチェックボックスを格納したフレーム
         self.checkFrm = gtk.Frame('Timers')
         self.checkFrm.add(self.timersVbox)
@@ -159,6 +162,18 @@ class Timer:
             print 'check 1 is OFF'
             self.timers[0]['enable'] = False
             print self.timers[0]
+
+    # 2つ目のチェックボックスがオン・オフされた時に呼ばれる関数
+    def on_toggle_check_2(self, widget=None, data=None):
+        if widget.get_active():
+            print 'check 2 is ON'
+            self.timers[0]['enable'] = True
+            print self.timers[0]
+        else:
+            print 'check 2 is OFF'
+            self.timers[0]['enable'] = False
+            print self.timers[0]
+
 
     # 配列timersに新しくtimerを追加する（排他処理）
     @synchronized(lock)
