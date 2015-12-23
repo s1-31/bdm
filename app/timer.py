@@ -10,6 +10,9 @@ import locale
 import threading
 import time
 
+import voice
+import weather
+
 # 排他処理用のデコレータ
 lock = threading.Lock()
 def synchronized(lock):
@@ -181,6 +184,10 @@ class Timer:
             for timer in timers:
                 if ( now.hour == timer['hour'] and now.minute == timer['minute']):
                     self.notification(now) # アラーム時刻になった時の動作
+                    while True:
+                        time.sleep(3)
+                        break
+                    self.finish_func(now)
                     self.check.set_active(False) # アラームが鳴ったらチェックボックスをDisnableする
                     timer['enable'] = False # アラームが鳴ったらそのタイマーはDisnableする
             time.sleep(1) # 現在時刻を取得する周期
@@ -193,6 +200,16 @@ class Timer:
         print "#########################"
         print "#########",now.hour, now.minute,"#########"
         print "#########################"
+
+        text = weather.Weather().get_string()
+        voice.VoiceText().getVoice(text=text)
+
+    def finish_func(self, now):
+        print "play voice..."
+
+        voice.VoiceText().playVoice()
+        
+        print "finish..."
 
 if __name__=='__main__':
     print "hello" # 目覚ましアプリスタート
