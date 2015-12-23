@@ -22,7 +22,7 @@ except ImportError:
 
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 CLIENT_SECRET_FILE = 'client_secret.json'
-APPLICATION_NAME = '目覚マシマシ'
+APPLICATION_NAME = 'mezamasi'
 
 class Calendar:
     """docstring for Google Calender"""
