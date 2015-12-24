@@ -299,6 +299,8 @@ class Timer:
 
     # アラーム時刻になった時の動作
     def notification(self, now):
+        self.button_quit.hide()
+
 
     	# self.gpio.conduction_power_on()
 
@@ -338,6 +340,7 @@ class Timer:
         # self.gpio.conduction_power_off()
         # self.gpio.cleanup()
 
+        self.button_quit.show()
         print "finish..."
 
     def hour_up(self, widget=None, data=None):
