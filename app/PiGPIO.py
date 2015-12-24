@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 import time
 import subprocess
 
-# IN_NO = 20 #電気ショックボタンが押されたか検出用
+# IN_NO = 16 #電気ショックボタンが押されたか検出用
 # OUT_NO = 21 #モーター回転用電源
 # OUT_NO2 = 26 #スイッチ導通検出用電源
 
