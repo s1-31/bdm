@@ -23,6 +23,9 @@ import mycalendar
 
 import pygame
 
+import glob
+import random
+
 # 排他処理用のデコレータ
 lock = threading.Lock()
 def synchronized(lock):
@@ -67,7 +70,12 @@ class Timer:
         #set timerボタン
         self.button_timerSet = gtk.Button('Set Timer')
         self.button_timerSet.connect('clicked', self.timerSet_clicked)
-        # スピンボタン
+        # ミュージック遷移ボタン
+	self.button_changeMusic = gtk.Button('Next Music')
+	self.button_changeMusic.connect('clicked', self.changeMusic_clicked)
+	self.entry_music = gtk.Entry()
+	self.entry_music.set_text(glob.glob('music/*')[0])
+	# スピンボタン
         # 時間(Hour)
         self.entry_hour = gtk.Entry()
         self.entry_hour.set_text('0')
@@ -119,8 +127,11 @@ class Timer:
         self.vbox = gtk.VBox()
         self.vbox.add(self.label_show)
         self.vbox.add(self.spins)
-        # self.vbox.add(self.entry)
-        self.vbox.add(self.button_timerSet)
+        
+	self.vbox.add(self.entry_music)
+	self.vbox.add(self.button_changeMusic)
+        
+	self.vbox.add(self.button_timerSet)
         self.vbox.add(self.button_quit)
         # チェックフレームとVBoxをHBoxに格納
         self.hbox = gtk.HBox()
@@ -156,6 +167,15 @@ class Timer:
 
         return False
 
+    #  self.changeMusic_clicked
+    def changeMusic_clicked(self, widget, data=None):
+	print 'change music'
+	musics = glob.glob('music/*')
+	while True:
+	    rand = random.randint(0, len(musics)-1)
+	    if musics[rand] != self.entry_music.get_text():
+		self.entry_music.set_text(musics[rand])
+		break
     # タイマーセットボタンが押された時に呼ばれる関数
     def timerSet_clicked(self, widget, data=None):
         hour = int(self.entry_hour.get_text())
@@ -261,7 +281,7 @@ class Timer:
     def alarm(self):
 
         pygame.mixer.init()
-        pygame.mixer.music.load('../wav/nyan-cat.mp3')
+        pygame.mixer.music.load('./'+self.entry_music.get_text())
 
         while self.alarm_enable:
             # 現在時刻取得
