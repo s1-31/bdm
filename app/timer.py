@@ -176,6 +176,7 @@ class Timer:
 	    if musics[rand] != self.entry_music.get_text():
 		self.entry_music.set_text(musics[rand])
 		break
+        pygame.mixer.music.load('./'+self.entry_music.get_text())
     # タイマーセットボタンが押された時に呼ばれる関数
     def timerSet_clicked(self, widget, data=None):
         hour = int(self.entry_hour.get_text())
