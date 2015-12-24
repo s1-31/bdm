@@ -39,7 +39,7 @@ class Weather(object):
 
         string1 = str(weather['datetime']) + '現在' + 'の' + str(weather['city']) + 'の天気は、' + str(weather['weather']) + 'です。'
 
-        string2 = str(weather['detail']) + 'で、最高気温は' + str(weather['temp_max']) + '度、最低気温は' + str(weather['temp_min']) + '度です。'
+        string2 = '最高気温は' + str(weather['temp_max']) + '度、最低気温は' + str(weather['temp_min']) + '度です。'
 
         return string1 + string2
 
