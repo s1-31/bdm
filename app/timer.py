@@ -127,10 +127,10 @@ class Timer:
         self.vbox = gtk.VBox()
         self.vbox.add(self.label_show)
         self.vbox.add(self.spins)
-        
+
 	self.vbox.add(self.entry_music)
 	self.vbox.add(self.button_changeMusic)
-        
+
 	self.vbox.add(self.button_timerSet)
         self.vbox.add(self.button_quit)
         # チェックフレームとVBoxをHBoxに格納
@@ -316,6 +316,9 @@ class Timer:
     def notification(self, now):
 
     	self.gpio.conduction_power_on()
+        self.button_changeMusic.hide()
+        self.button_quit.hide()
+        self.button_timerSet.hide()
 
         pygame.mixer.music.play(-1) # ()内は再生回数 -1:ループ再生
 
@@ -368,6 +371,9 @@ class Timer:
         voice.VoiceText().playVoice(filepath='../wav/calendor.wav')
 
         self.gpio.conduction_power_off()
+        self.button_changeMusic.show()
+        self.button_quit.show()
+        self.button_timerSet.show()
 
         print "finish..."
 
